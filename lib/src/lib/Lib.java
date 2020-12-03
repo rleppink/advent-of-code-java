@@ -26,7 +26,7 @@ public class Lib {
     
     return result;
   }
-
+  
   /**
    * Count the amount of chars c in string s.
    * 
@@ -43,15 +43,43 @@ public class Lib {
     return count;
   }
   
+  /**
+   * Run a generalized advent of code day. Every day has the same characteristics:
+   * 1. Read in that day's file
+   * 2. Parse the file to a workable data structure
+   * 3. Pass that data structure to parts 1 and 2
+   * 4. Print their results
+   * 
+   * @param <T> The type of the parsed data structure
+   * @param <TRes> The type of the puzzle answers
+   * @param day The day number
+   * @param parser A function to parse an input string to a data structure
+   * @param part1 A function to solve part 1
+   * @param part2 A function to solve part 2
+   * @throws IOException When the file cannot be read
+   */
   public static <T, TRes> void runDay(
       int day,
-      Function<String, List<T>> parser,
-      Function<List<T>, TRes> part1,
-      Function<List<T>, TRes> part2) throws IOException {
+      Function<String, T> parser,
+      Function<T, TRes> part1,
+      Function<T, TRes> part2) throws IOException {
     String fileContent = Files.readString(Path.of("inputs/day" + day));
-    List<T> parsed = parser.apply(fileContent);
+    T parsed = parser.apply(fileContent);
     
     Lib.printResultWithExecutionTime(() -> part1.apply(parsed), "Part 1; ");
     Lib.printResultWithExecutionTime(() -> part2.apply(parsed), "Part 2; ");
+  }
+  
+  /**
+   * Print and then return the given value T. Quick peek, useful for debugging,
+   * can be used in call chains.
+   * 
+   * @param <T> The type of the given value
+   * @param t The value to print
+   * @return The original value
+   */
+  public static <T> T inspect(T t) {
+    System.out.println(t);
+    return t;
   }
 }
