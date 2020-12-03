@@ -57,7 +57,7 @@ public class Lib {
    * @param part2 A function to solve part 2
    * @throws IOException When the file cannot be read
    */
-  public static <T, TRes> void runDay(
+  public static <T, TRes> Tuple<TRes, TRes> runDay(
       int day,
       Function<String, T> parser,
       Function<T, TRes> part1,
@@ -65,8 +65,9 @@ public class Lib {
     String fileContent = Files.readString(Path.of("inputs/day" + day));
     T parsed = parser.apply(fileContent);
     
-    Lib.printResultWithExecutionTime(() -> part1.apply(parsed), "Part 1; ");
-    Lib.printResultWithExecutionTime(() -> part2.apply(parsed), "Part 2; ");
+    return new Tuple<TRes, TRes>(
+      Lib.printResultWithExecutionTime(() -> part1.apply(parsed), "Part 1; "),
+      Lib.printResultWithExecutionTime(() -> part2.apply(parsed), "Part 2; "));
   }
   
   /**
@@ -80,5 +81,16 @@ public class Lib {
   public static <T> T inspect(T t) {
     System.out.println(t);
     return t;
+  }
+  
+  public static class Tuple<T, U> {
+    public T item1;
+    public T item2;
+
+    public Tuple(T item1, T item2) {
+      super();
+      this.item1 = item1;
+      this.item2 = item2;
+    }
   }
 }
