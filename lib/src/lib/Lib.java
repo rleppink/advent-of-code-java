@@ -1,5 +1,10 @@
 package lib;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Lib {
@@ -36,5 +41,17 @@ public class Lib {
         count += 1;
     
     return count;
+  }
+  
+  public static <T, TRes> void runDay(
+      int day,
+      Function<String, List<T>> parser,
+      Function<List<T>, TRes> part1,
+      Function<List<T>, TRes> part2) throws IOException {
+    String fileContent = Files.readString(Path.of("inputs/day" + day));
+    List<T> parsed = parser.apply(fileContent);
+    
+    Lib.printResultWithExecutionTime(() -> part1.apply(parsed), "Part 1; ");
+    Lib.printResultWithExecutionTime(() -> part2.apply(parsed), "Part 2; ");
   }
 }
