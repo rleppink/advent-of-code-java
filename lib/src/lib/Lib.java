@@ -3,9 +3,15 @@ package lib;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ * Stuff that makes AoC easier or that I'm missing from the stdlib.
+ * 
+ * @author rleppink
+ */
 public class Lib {
   /**
    * Execute and time the given function f, print its result, and the execution
