@@ -62,7 +62,7 @@ public class Lib {
    * @param part2 A function to solve part 2
    * @throws IOException When the file cannot be read
    */
-  public static <T, TRes> Tuple<TRes, TRes> runDay(
+  public static <T, TRes> Pair<TRes, TRes> runDay(
       int day,
       Function<String, T> parser,
       Function<T, TRes> part1,
@@ -70,7 +70,7 @@ public class Lib {
     String fileContent = Files.readString(Path.of("inputs/day" + day));
     T parsed = parser.apply(fileContent);
     
-    return new Tuple<TRes, TRes>(
+    return new Pair<TRes, TRes>(
       Lib.printResultWithExecutionTime(() -> part1.apply(parsed), "Part 1; "),
       Lib.printResultWithExecutionTime(() -> part2.apply(parsed), "Part 2; "));
   }
@@ -88,14 +88,19 @@ public class Lib {
     return t;
   }
   
-  public static class Tuple<T, U> {
-    public T item1;
-    public T item2;
-
-    public Tuple(T item1, T item2) {
-      super();
-      this.item1 = item1;
-      this.item2 = item2;
+  /**
+   * Repeat the given string s for n times.
+   * 
+   * @param s The string to repeat
+   * @param n The amount of repeats
+   * @return A string containing those repeats
+   */
+  public static String repeat(String s, int n) {
+    var sb = new StringBuilder();
+    for (int i = 0; i < n; i++) {
+      sb.append(s);
     }
+    
+    return sb.toString();
   }
 }
