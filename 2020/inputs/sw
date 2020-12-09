@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+	echo "Please enter a day argument"
+	exit 1
+fi
+
+
+if test -f "day$1.example" && test -f "day$1"; then
+	echo "example -> original"
+	mv day$1 day$1.original
+	mv day$1.example day$1
+elif test -f "day$1.original" && test -f "day$1"; then
+	echo "original -> example"
+	mv day$1 day$1.example
+	mv day$1.original day$1
+else
+	echo "Could not find example|original file and/or current file"
+fi
+
+
